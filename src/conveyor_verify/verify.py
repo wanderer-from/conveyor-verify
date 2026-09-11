@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import io
+import itertools
 import json
 import zipfile
 from dataclasses import dataclass, field
@@ -118,7 +119,7 @@ def verify_log(
             report.anchors.append(entry)
             if entry["ok"]:
                 sizes.append((size, hex_to_bytes(root)))
-    for (a, ra), (b, rb) in zip(sizes, sizes[1:], strict=False):
+    for (a, ra), (b, rb) in itertools.pairwise(sizes):
         from conveyor_verify.vendored.merkle import consistency_proof
 
         if not verify_consistency(a, b, consistency_proof(leaves[:b], a, b), ra, rb):

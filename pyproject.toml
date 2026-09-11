@@ -3,9 +3,22 @@ name = "conveyor-verify"
 version = "0.1.0"
 description = "Offline verifier for Conveyor integrity logs and evidence bundles"
 readme = "README.md"
+authors = [{ name = "Brandmauer Report" }]
+keywords = ["transparency-log", "merkle", "ed25519", "verification", "journalism"]
+classifiers = [
+  "Programming Language :: Python :: 3.12",
+  "License :: OSI Approved :: MIT License",
+  "Operating System :: OS Independent",
+  "Topic :: Security :: Cryptography",
+]
 license = { text = "MIT" }
 requires-python = ">=3.12"
 dependencies = ["pydantic>=2.9", "pynacl>=1.5", "rfc8785>=0.1.4"]
+
+[project.urls]
+Homepage = "https://github.com/wanderer-from/conveyor-verify"
+Specification = "https://github.com/wanderer-from/conveyor/blob/main/docs/spec/integrity.md"
+Publication = "https://brandmauer.report"
 
 [project.scripts]
 conveyor-verify = "conveyor_verify.cli:main"
@@ -23,6 +36,16 @@ packages = ["src/conveyor_verify"]
 [tool.ruff]
 line-length = 110
 target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+# Same rule set as the core repository, so the vendored primitives lint identically here.
+select = ["E", "F", "W", "I", "N", "UP", "B", "A", "C4", "SIM", "RUF", "ANN", "S", "PT", "ERA", "PL"]
+ignore = ["ANN401", "PLR0913", "S101", "PLR2004"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S", "PLR", "ANN", "E501"]
+"src/conveyor_verify/verify.py" = ["PLR0912", "PLR0915", "PLC0415"]  # one linear pass per mode
 
 [tool.mypy]
 python_version = "3.12"
