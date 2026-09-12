@@ -32,8 +32,8 @@ Then compare `public_key` with the `seq 1` row of the log:
 curl -s "https://integrity.brandmauer.report/integrity/v1/log?from=1&limit=1" | python3 -c "import sys,json; e=json.loads(sys.stdin.readline())['envelope']; print(e['record_type'], e['payload'].get('public_key'))"
 ```
 
-Status: the attestation is present; its minisign signature is added by the operator before launch
-(stage 7 of the Conveyor plan), together with the DNS TXT record.
+Status: attestation signed by the operator on 2026-09-12 (`brandmauer-root-key.json.minisig`); the DNS
+TXT record `_conveyor-root-key.brandmauer.report` is published at launch (stage 7 of the Conveyor plan).
 
 ## Operator procedure
 
